@@ -7,17 +7,22 @@ SiampleApp::Application.routes.draw do
 
 
   resources :sessions,      only: [:new, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy]
+  resources :microposts do
+  resources :comment
+
+end
   resources :relationships, only: [:create, :destroy]
 
 
   root to: 'static_pages#home'
+
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -46,13 +51,13 @@ SiampleApp::Application.routes.draw do
 
   # Sample resource route with sub-resources:
   #   resources :products do
-  #     resources :comments, :sales
+  #     resources :comment, :sales
   #     resource :seller
   #   end
 
   # Sample resource route with more complex sub-resources
   #   resources :products do
-  #     resources :comments
+  #     resources :comment
   #     resources :sales do
   #       get 'recent', :on => :collection
   #     end

@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+
   end
   def create
     @user = User.new(params[:user])
@@ -42,6 +43,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
+    @micropost = Micropost.includes(:comments).find(params[:id])
+    @comment = Comment.new
   end
 
   def following
@@ -56,6 +59,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
+  end
+  def like
+    @micropost = Micropost.find(params[:id])
+    unless @micropost.likes.find_by_user_id(current_user.id)
+      like = @micropost.likes.build(:user_id => current_user.id)
+      flash[:error] = "Error" unless like.save
+    end
+    redirect_to :back
   end
 
 
