@@ -8,7 +8,7 @@ SiampleApp::Application.routes.draw do
 
   resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts do
-  resources :comment
+  resources :comments
 
 end
   resources :relationships, only: [:create, :destroy]
@@ -51,13 +51,13 @@ end
 
   # Sample resource route with sub-resources:
   #   resources :products do
-  #     resources :comment, :sales
+  #     resources :comments, :sales
   #     resource :seller
   #   end
 
   # Sample resource route with more complex sub-resources
   #   resources :products do
-  #     resources :comment
+  #     resources :comments
   #     resources :sales do
   #       get 'recent', :on => :collection
   #     end

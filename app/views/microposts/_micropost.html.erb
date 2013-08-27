@@ -3,16 +3,29 @@
   <span class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   </span>
+
   <% if current_user?(micropost.user) %>
       <%= link_to "delete", micropost, method: :delete,
                   data: { confirm: "You sure?" },
                   title: micropost.content %>
   <% end %>
+
 <script type="text/javascript" src="//yandex.st/share/share.js"
           charset="utf-8"></script>
   <div class="yashare-auto-init" data-yashareL10n="ru"
        data-yashareType="button" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,surfingbird"
 
   ></div>
-  <%= render 'comment/comment', micropost: micropost %>
+  <h2>Comments</h2>
+  <% micropost.comments.each do |comment| %>
+      <p>
+        <b>Comment:</b>
+        <%= comment.body %>
+        <%= link_to "delete", micropost_comment_path(micropost,comment), method: :delete, data: { confirm: "You sure?" } %>
+      </p>
+
+  <% end %>
+
+  <%= render 'shared/comment_form', micropost: micropost %>
+
 </li>
